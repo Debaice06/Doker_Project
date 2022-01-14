@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+    php-apache-environment:
+        container_name: php-apache
+        build:
+            context: /root/practice/ecommerce
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        volumes:
+            - ./php/:/var/www/html/
+        ports:
+            - 3000:80
+    db:
+        container_name: db
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456
+            MYSQL_DATABASE: ecomdb
+            MYSQL_USER: ecomuser
+            MYSQL_PASSWORD: ecompassword
+        volumes:
+            - ./php/assets/:/docker-entrypoint-initdb.d/
+     #   ports:
+     #      - "3306:3306"
+
